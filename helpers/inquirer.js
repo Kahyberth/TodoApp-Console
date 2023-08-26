@@ -6,9 +6,9 @@ import colors from 'colors';
 
 export const inquirerMenu = async() => {
     //console.clear();
-    console.log('===========================');
-    console.log('   Seleccione una opción');
-    console.log('===========================\n');
+    console.log('==========================='.rainbow);
+    console.log('   Seleccione una opción'.green);
+    console.log('===========================\n'.rainbow);
     const opt = await inquirer.prompt([
         {
             type: 'list',
@@ -16,48 +16,43 @@ export const inquirerMenu = async() => {
             message: '¿Qué desea hacer?\n',
             choices: [{
                 value: '1',
-                name: `${'1.'.green} Crear tarea`
+                name: `${'1.'.blue} Crear tarea`
             },
             {
                 value: '2',
-                name: `${'2.'.green} Listar tarea`
+                name: `${'2.'.blue} Listar tarea`
             },
             {
                 value: '3',
-                name: `${'3.'.green} Listar tareas completadas`
+                name: `${'3.'.blue} Listar tareas completadas`
             },
             {
                 value: '4',
-                name: `${'4.'.green} Listar tareas pendientes`
+                name: `${'4.'.blue} Listar tareas pendientes`
             },
             {
                 value: '5',
-                name: `${'5.'.green} Completar tarea(s)`
+                name: `${'5.'.blue} Completar tarea(s)`
             },
             {
                 value: '6',
-                name: `${'6.'.green} Borrar tarea`
+                name: `${'6.'.blue} Borrar tarea`
             },
             {
                 value: '7',
-                name: `${'7.'.green} Borrar todas las tarea(s)`
-            },
-            {
-                value: '8',
-                name: `${'8.'.green} Editar tarea \n`
+                name: `${'7.'.blue} Editar tarea \n`
             },
             {
                 value: '0',
-                name: `${'0.'.green} Salir \n`
+                name: `${'0.'.blue} Salir \n`
             }
         ]
         }
     ]);
-    console.log();
     return opt.option;
 }
 
-export const pausa = async () => {
+export const pause = async () => {
     console.log('\n');
     const stop = await inquirer.prompt([
         {
@@ -70,7 +65,7 @@ export const pausa = async () => {
 }
 
 
-export const leerInput = async (message) => {
+export const input = async (message) => {
     const question = [
         {
             type: 'input',
@@ -150,5 +145,28 @@ export const multipleSelection = async ( tareas ) => {
     ]);
     return option.ids;
 }
+
+export const editTasks = async ( tareas ) => {
+    let counter = 0;
+    const choices = tareas.map(tarea => {
+        counter++;
+        return {
+            value: tarea.id,
+            name: `${counter}. ${tarea.desc}`
+        }
+    });
+
+    const opt = await inquirer.prompt([{
+        type: 'list',
+        name: 'id',
+        message: 'Seleccione la que desea editar',
+        choices
+    }]);
+
+    return opt.id;
+}
+
+
+
 
 

@@ -1,11 +1,11 @@
-import { Tarea } from "./tarea.js";
+import { Task } from "./task.js";
 import colors from 'colors';
-export class Tareas {
+export class Tasks {
     constructor(){
         this._listado = {};
     }
 
-    get listadoArr() {
+    get arrayList() {
         const listado = [];
         Object.keys(this._listado).forEach( key => {
             const tarea = this._listado[key];
@@ -14,8 +14,8 @@ export class Tareas {
         return listado;
     }
 
-    crearTarea(desc='') {
-        const tarea = new Tarea(desc);
+    createTask(desc='') {
+        const tarea = new Task(desc);
         this._listado[tarea.id] = tarea;
     }
 
@@ -28,7 +28,7 @@ export class Tareas {
     listStatus( ) {
         console.log();
         let counter = 0;
-        this.listadoArr.forEach(tarea => {
+        this.arrayList.forEach(tarea => {
             counter++;
             if ( tarea.completadoEn !== null ) {
                 console.log(` ${counter.toString().green}. ${tarea.desc} :: ${'Completada'.green}`);
@@ -42,7 +42,7 @@ export class Tareas {
     list(status = true) {
         console.log();
         let counter = 0;
-        this.listadoArr.forEach(tarea => {
+        this.arrayList.forEach(tarea => {
             counter++;
             if (tarea.completadoEn !== null && status) {
                 console.log(` ${counter.toString().green}. ${tarea.desc} :: ${'Completada'.green}`);
@@ -66,10 +66,14 @@ export class Tareas {
                 task.completadoEn = new Date().toISOString();
             }
         });
-        this.listadoArr.forEach( tarea => {
+        this.arrayList.forEach( tarea => {
             if ( !ids.includes(tarea.id) ) {
                 this._listado[tarea.id].completadoEn = null;
             }
         });
+    }
+
+    edit = async ( id, desc ) => {
+        this._listado[id].desc = desc;
     }
 }
